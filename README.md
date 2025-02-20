@@ -3,7 +3,7 @@ This is my first attempt at ricing my devices!
 ---
 Dependancies so far:
 - hyprland
-- hyprpaper
+- swww
 - hyprlock
 - grim
 - slurp
