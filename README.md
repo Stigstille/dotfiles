@@ -10,6 +10,8 @@ Dependancies so far:
 - waybar
 - hyprpolkitagent
 - swaync
+- playerctl
+- ytmusicapi (python library)
 ---
 - I think thats it :3
 ---
