@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-swww-daemon 
+swww-daemon &
 sleep 1
 
 WALLPAPER_DIR="$HOME/Pictures/Backgrounds/"
@@ -10,4 +10,4 @@ CURRENT_WALL=$(swww query | grep "image" | head -1 | awk -F': ' '{print $5}')
 WALLPAPER=$(find "$WALLPAPER_DIR" -type f ! -name "$(basename "$CURRENT_WALL")" | shuf -n 1)
 
 # Apply the selected wallpaper
-swww img $WALLPAPER --transition-type random --transition-angle 25
+swww img $WALLPAPER -t none
