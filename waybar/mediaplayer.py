@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+
+# This script was provided from the waybar git repo! 
+# https://github.com/Alexays/Waybar/blob/master/resources/custom_modules/mediaplayer.py
+# This is licensed under the MIT License
+
 import gi
 gi.require_version("Playerctl", "2.0")
 from gi.repository import Playerctl, GLib
