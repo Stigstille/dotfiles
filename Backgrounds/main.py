@@ -32,6 +32,8 @@ while True:
         img_data = requests.get(thumbnailResized).content
         with open('/tmp/album-art.jpg', 'wb') as handler:
             handler.write(img_data)
+
+        os.system(r'/usr/bin/sed -i --follow-symlinks "s/path = .*/path = \/tmp\/album-art.jpg/1" $HOME/.config/hypr/hyprlock.conf')
         
         os.system('swww img /tmp/album-art.jpg --transition-type random --transition-angle 25')
     elif (previusSong != song) and (song == ""):
