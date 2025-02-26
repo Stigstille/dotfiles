@@ -53,7 +53,7 @@ button:hover {
 
 /* you can set a style on hover for any module like this */
 #pulseaudio:hover {
-    background-color: #a37800;
+    background-color: rgba(163, 119, 0, 0.3);
 }
 
 #workspaces button {
