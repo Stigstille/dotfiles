@@ -1,0 +1,10 @@
+[config]
+allow_images=true
+show=drun
+prompt=Search
+term=alacritty
+hide_scroll=false
+print_command=true
+insensitive=true
+no_actions=true
+columns=3
