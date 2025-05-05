@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import logging
+import time
 import traceback
 from ytmusicapi import YTMusic
 import os, re, requests
@@ -54,11 +55,13 @@ def main():
             previusSong = song
             logging.info(f"No song playing")
             os.system("~/.config/hypr/reloadHyprpaper.sh")
+        time.sleep(1)
 
 if __name__ == "__main__":
-    try:
-        main()
-    except Exception as e:
-        logging.error(traceback.format_exc())
-        logging.error(f'An error occurred: {str(e)}')
-        raise
+    while True:
+        try:
+            main()
+        except Exception as e:
+            logging.error(traceback.format_exc())
+            logging.error(f'An error occurred: {str(e)}')
+            raise
