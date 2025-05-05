@@ -3,3 +3,6 @@ background = "#000000"
 
 [window]
 opacity = 0.75
+
+[env]
+SHELL = "/usr/bin/zsh"

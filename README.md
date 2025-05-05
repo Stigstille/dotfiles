@@ -16,7 +16,7 @@ This is my first attempt at ricing my devices!
 - wl-clipboard
 - wofi
 ## One-liner to install Dependancies:
-`yay -S hyprland swww hyprlock grim slurp waybar hyprpolkitagent swaync playerctl otf-font-awesome python-ytmusicapi wl-clipboard wofi`
+`yay -S hyprland swww hyprlock grim slurp waybar hyprpolkitagent swaync playerctl otf-font-awesome python-ytmusicapi wl-clipboard wofi zsh`
 ---
 - I think thats it :3
 ---
