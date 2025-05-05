@@ -15,7 +15,9 @@
         "sway/scratchpad"
     ],
     "modules-center": [
+//      "custom/media",
         "sway/window"
+
     ],
     "modules-right": [
         

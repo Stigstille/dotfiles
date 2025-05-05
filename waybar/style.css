@@ -344,3 +344,7 @@ label:focus {
 .modules-right {
     background-color: rgba(0, 0, 0, 0.3); /* Adjust the alpha value as needed */
 }
+
+.modules-center {
+    background-color: rgba(0, 0, 0, 0.0); /* Adjust the alpha value as needed */
+}
