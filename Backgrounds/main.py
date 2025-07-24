@@ -51,7 +51,8 @@ def main():
 
             os.system(r'/usr/bin/sed -i --follow-symlinks "s/path = .*/path = \/tmp\/album-art.jpg/1" $HOME/.config/hypr/hyprlock.conf')
             
-            os.system('swww img /tmp/album-art.jpg --transition-type random --transition-angle 25')
+            # os.system('swww img /tmp/album-art.jpg --transition-type random --transition-angle 25')
+            os.system("swww img --transition-angle 25 --transition-type wave /tmp/album-art.jpg --transition-fps 120")
         elif (previusSong != song) and (song == ""):
             previusSong = song
             logging.info(f"No song playing")
