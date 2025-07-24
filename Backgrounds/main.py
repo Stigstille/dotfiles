@@ -26,7 +26,8 @@ def main():
             logging.info(f"Song changed to {song}")
             try: 
                 search_results = ytmusic.search(song,"songs")
-
+                if (search_results[0]["title"] == "Bad Gas"):
+                    raise ValueError("Fuck \"Bad Gas\"")
                 videoId = search_results[0]["videoId"]
             except:
                 search_results = ytmusic.search(song)
