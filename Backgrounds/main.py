@@ -24,35 +24,38 @@ def main():
         if (previusSong != song) and (song != ""):
             previusSong = song
             logging.info(f"Song changed to {song}")
-            try: 
-                search_results = ytmusic.search(song,"songs")
-                if (search_results[0]["title"] == "Bad Gas"):
-                    raise ValueError("Fuck \"Bad Gas\"")
-                videoId = search_results[0]["videoId"]
-            except:
-                search_results = ytmusic.search(song)
-                logging.warning(f"Song not found, searching for {search_results[0]['title']} instead")
-                videoId = search_results[0]["videoId"]
-            logging.debug(f"Video ID: {videoId}")
-            thumbnailInfo = search_results[0]["thumbnails"][0]
-            print(search_results[0]["title"])
-            thumbnail = thumbnailInfo["url"]
-            thumbnailWidth = thumbnailInfo["width"]
-            thumbnailHeight = thumbnailInfo["height"]
+            file = os.path.expanduser(f'~/Public/album-art/{re.sub(r'[^a-zA-Z0-9 -]', '_', song)}.jpg')
+            if not os.path.exists(file):
+                try: 
+                    search_results = ytmusic.search(song,"songs")
+                    if (search_results[0]["title"] == "Bad Gas"):
+                        raise ValueError("Fuck \"Bad Gas\"")
+                    videoId = search_results[0]["videoId"]
+                except:
+                    search_results = ytmusic.search(song)
+                    logging.warning(f"Song not found, searching for {search_results[0]['title']} instead")
+                    videoId = search_results[0]["videoId"]
+                logging.debug(f"Video ID: {videoId}")
+                thumbnailInfo = search_results[0]["thumbnails"][0]
+                print(search_results[0]["title"])
+                thumbnail = thumbnailInfo["url"]
+                thumbnailWidth = thumbnailInfo["width"]
+                thumbnailHeight = thumbnailInfo["height"]
 
-            # please ignore my shitty regex
-            pattern = r"=w.{1,4}\-h.{1,4}-"
-            size = f"=w{thumbnailWidth*100}-h{thumbnailHeight*100}-"
+                # please ignore my shitty regex
+                pattern = r"=w.{1,4}\-h.{1,4}-"
+                size = f"=w{thumbnailWidth*100}-h{thumbnailHeight*100}-"                
 
-            thumbnailResized = re.sub(pattern, size, thumbnail)
-            img_data = requests.get(thumbnailResized).content
-            with open('/tmp/album-art.jpg', 'wb') as handler:
-                handler.write(img_data)
+                thumbnailResized = re.sub(pattern, size, thumbnail)
+                img_data = requests.get(thumbnailResized).content
+                with open(file, 'wb') as handler:
+                    handler.write(img_data)
 
-            os.system(r'/usr/bin/sed -i --follow-symlinks "s/path = .*/path = \/tmp\/album-art.jpg/1" $HOME/.config/hypr/hyprlock.conf')
+            sed_cmd = f"""/usr/bin/sed -i --follow-symlinks 's|path = .*|path = {file}|' $HOME/.config/hypr/hyprlock.conf"""
+            os.system(sed_cmd)
             
             # os.system('swww img /tmp/album-art.jpg --transition-type random --transition-angle 25')
-            os.system("swww img --transition-angle 25 --transition-type wave /tmp/album-art.jpg --transition-fps 120")
+            os.system(f"swww img --transition-angle 25 --transition-type wave '{file}' --transition-fps 120")
         elif (previusSong != song) and (song == ""):
             previusSong = song
             logging.info(f"No song playing")
