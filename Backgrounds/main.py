@@ -24,29 +24,43 @@ def main():
         if (previusSong != song) and (song != ""):
             previusSong = song
             logging.info(f"Song changed to {song}")
+            print(f"Song changed to {song}")
             file = os.path.expanduser(f'~/Public/album-art/{re.sub(r'[^a-zA-Z0-9 -]', '_', song)}.jpg')
             if not os.path.exists(file):
                 try: 
                     search_results = ytmusic.search(song,"songs")
-                    if (search_results[0]["title"] == "Bad Gas"):
+                    if (len(search_results) < 1):
+                        raise ValueError("Empty List")
+                    if ((search_results[0]["title"] == "Bad Gas") or ("Aquí Te Esperaré".lower() in search_results[0]["title"].lower())):
+                        logging.warning(f"Annoying song found, skipping")
                         raise ValueError("Fuck \"Bad Gas\"")
                     videoId = search_results[0]["videoId"]
                 except:
                     search_results = ytmusic.search(song)
-                    logging.warning(f"Song not found, searching for {search_results[0]['title']} instead")
-                    videoId = search_results[0]["videoId"]
+                    logging.warning(f"Song not found, searching for video thumbnail instead")
+                    if len(search_results) > 0:
+                        title = search_results[0]["title"].lower()
+                        if title == "bad gas".lower() or "aquí te esperaré" in title:
+                            logging.warning(f"Annoying thumbnail found, skipping")
+                            search_results = []
+
+                    videoId = "N/A"
+                    if (len(search_results) > 0):
+                        videoId = search_results[0]["videoId"]
                 logging.debug(f"Video ID: {videoId}")
-                thumbnailInfo = search_results[0]["thumbnails"][0]
-                print(search_results[0]["title"])
-                thumbnail = thumbnailInfo["url"]
-                thumbnailWidth = thumbnailInfo["width"]
-                thumbnailHeight = thumbnailInfo["height"]
+                thumbnailResized = "https://album.stille.zip/unknown.jpg"
+                if len(search_results) > 0:
+                    thumbnailInfo = search_results[0]["thumbnails"][0]
+                    print(search_results[0]["title"])
+                    thumbnail = thumbnailInfo["url"]
+                    thumbnailWidth = thumbnailInfo["width"]
+                    thumbnailHeight = thumbnailInfo["height"]
 
-                # please ignore my shitty regex
-                pattern = r"=w.{1,4}\-h.{1,4}-"
-                size = f"=w{thumbnailWidth*100}-h{thumbnailHeight*100}-"                
+                    # please ignore my shitty regex
+                    pattern = r"=w.{1,4}\-h.{1,4}-"
+                    size = f"=w{thumbnailWidth*100}-h{thumbnailHeight*100}-"                
 
-                thumbnailResized = re.sub(pattern, size, thumbnail)
+                    thumbnailResized = re.sub(pattern, size, thumbnail)
                 img_data = requests.get(thumbnailResized).content
                 with open(file, 'wb') as handler:
                     handler.write(img_data)
